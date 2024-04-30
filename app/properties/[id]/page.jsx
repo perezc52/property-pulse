@@ -14,7 +14,7 @@ import {
   FaMapMarker,
   FaArrowLeft,
 } from "react-icons/fa";
-import { fetchProperty } from "@/app/properties/requests";
+import { fetchProperty } from "@/utils/requests";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 
 const PropertyPage = () => {
