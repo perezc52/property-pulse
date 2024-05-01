@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Spinner from "@/components/Spinner";
 import Link from "next/link";
 import {
   FaBed,
@@ -42,6 +43,7 @@ const PropertyPage = () => {
 
   return (
     <>
+      {loading && <Spinner loading={loading}/>}
       {!loading && property && (
         <>
           <PropertyHeaderImage image={property.images[0]} />
@@ -78,7 +80,7 @@ const PropertyPage = () => {
                         <div className="text-gray-500 mr-2 font-bold">
                           Nightly
                         </div>
-                        <div className="text-2xl font-bold">
+                        <div className="text-2xl font-bold text-blue-500">
                           {property.rates.nightly ? (
                             `$${property.rates.nightly.toLocaleString()}`
                           ) : (
