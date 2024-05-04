@@ -111,14 +111,14 @@ const PropertyAddForm = () => {
 
         <div className="mb-4">
           <label
-            htmlFor="property_type"
+            htmlFor="type"
             className="block text-gray-700 font-bold mb-2"
           >
             Property Type
           </label>
           <select
-            id="property_type"
-            name="property_type"
+            id="type"
+            name="type"
             className="border rounded w-full py-2 px-3"
             required
             value={fields.type}
@@ -511,7 +511,7 @@ const PropertyAddForm = () => {
           <input
             type="text"
             id="seller_name"
-            name="seller_info.name."
+            name="seller_info.name"
             className="border rounded w-full py-2 px-3"
             placeholder="Name"
             value={fields.seller_info.name}
