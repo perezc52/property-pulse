@@ -85,13 +85,14 @@ export const POST = async (request) => {
       );
 
       imageUploadPromises.push(result.secure_url);
-    }
-
     // Wait for all image uploads to complete
     const uploadedImages = await Promise.all(imageUploadPromises);
 
     // Add the uploaded images to the propertyData object
     propertyData.images = uploadedImages;
+    }
+
+
 
     const newProperty = new Property(propertyData);
     await newProperty.save();
