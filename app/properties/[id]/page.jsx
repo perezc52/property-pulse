@@ -21,6 +21,7 @@ const PropertyPage = () => {
   useEffect(() => {
     const fetchPropertyData = async () => {
       const property = await fetchProperty(id);
+      console.log(property)
       setProperty(property);
       setLoading(false);
     };
