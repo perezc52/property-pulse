@@ -1,8 +1,8 @@
-import connectDB from '@/config/database';
-import Message from '@/models/Message';
-import { getSessionUser } from '@/utils/getSessionUser';
+import connectDB from "@/config/database";
+import Message from "@/models/Message";
+import { getSessionUser } from "@/utils/getSessionUser";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 // GET /api/messages
 export const GET = async (request) => {
@@ -12,21 +12,32 @@ export const GET = async (request) => {
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.userId) {
-      return new Response('User ID is required', { status: 401 });
+      return new Response("User ID is required", { status: 401 });
     }
 
     const { userId } = sessionUser;
 
-    const messages = await Message.find({ recipient: userId })
-      .populate('sender', 'username')
-      .populate('property', 'name');
+    const readMessages = await Message.find({ recipient: userId, read: true })
+      .sort({ createdAt: -1 }) // Sort "read" messages by date in descending order
+      .populate("sender", "username")
+      .populate("property", "name");
+
+    const unreadMessages = await Message.find({
+      recipient: userId,
+      read: false,
+    })
+      .sort({ createdAt: -1 }) // Sort unread messages by date in descending order
+      .populate("sender", "username")
+      .populate("property", "name");
+
+    const messages = [...unreadMessages, ...readMessages]; // Combine unread and read messages
 
     return new Response(JSON.stringify(messages), {
       status: 200,
     });
   } catch (error) {
     console.log(error);
-    return new Response('Something went wrong', { status: 500 });
+    return new Response("Something went wrong", { status: 500 });
   }
 };
 
@@ -40,7 +51,7 @@ export const POST = async (request) => {
     const sessionUser = await getSessionUser();
 
     if (!sessionUser || !sessionUser.user) {
-      return new Response('User ID is required', { status: 401 });
+      return new Response("User ID is required", { status: 401 });
     }
 
     const { user } = sessionUser;
@@ -48,7 +59,7 @@ export const POST = async (request) => {
     // Can not send message to self
     if (user.id === recipient) {
       return new Response(
-        JSON.stringify({ message: 'Can not send message to yourself' }),
+        JSON.stringify({ message: "Can not send message to yourself" }),
         { status: 400 }
       );
     }
@@ -66,10 +77,10 @@ export const POST = async (request) => {
     // Save message
     await newMessage.save();
 
-    return new Response(JSON.stringify({ message: 'Message Sent' }), {
+    return new Response(JSON.stringify({ message: "Message Sent" }), {
       status: 200,
     });
   } catch (error) {
-    return new Response('Something went wrong', { status: 500 });
+    return new Response("Something went wrong", { status: 500 });
   }
 };
