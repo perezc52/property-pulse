@@ -7,8 +7,21 @@ import cloudinary from "@/config/cloudinary.js";
 export const GET = async (request) => {
   try {
     await connectDB();
-    const properties = await Property.find({});
-    return new Response(JSON.stringify(properties), {
+
+    const page = request.nextUrl.searchParams.get("page") || 1;
+    const pageSize = request.nextUrl.searchParams.get("pageSize") || 9;
+
+    const skip = (page - 1) * pageSize;
+
+    const totalProperties = await Property.countDocuments({});
+    const properties = await Property.find({}).skip(skip).limit(pageSize);
+
+    const result = {
+      total: totalProperties,
+      properties,
+    };
+
+    return new Response(JSON.stringify(result), {
       status: 200,
     });
   } catch (error) {
@@ -85,19 +98,17 @@ export const POST = async (request) => {
       );
 
       imageUploadPromises.push(result.secure_url);
-    // Wait for all image uploads to complete
-    const uploadedImages = await Promise.all(imageUploadPromises);
+      // Wait for all image uploads to complete
+      const uploadedImages = await Promise.all(imageUploadPromises);
 
-    // Add the uploaded images to the propertyData object
-    propertyData.images = uploadedImages;
+      // Add the uploaded images to the propertyData object
+      propertyData.images = uploadedImages;
     }
-
-
 
     const newProperty = new Property(propertyData);
     await newProperty.save();
 
-    console.log(newProperty)
+    console.log(newProperty);
 
     return Response.redirect(
       `${process.env.NEXTAUTH_URL}/properties/${newProperty._id}`
