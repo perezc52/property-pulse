@@ -6,6 +6,7 @@ async function fetchProperties({ showFeatured = false } = {}) {
     if (!apiDomain) {
       return [];
     }
+    console.log(showFeatured)
 
     const res = await fetch(`${apiDomain}/properties${showFeatured ? '/featured' : ''}`, { cache: 'no-store' });
 
