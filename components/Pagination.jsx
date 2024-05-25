@@ -1,33 +1,30 @@
-const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
+import Link from 'next/link';
+
+const Pagination = ({ page, pageSize, totalItems }) => {
   const totalPages = Math.ceil(totalItems / pageSize);
 
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      onPageChange(newPage);
-    }
-  };
-
   return (
-    <div className="mt-10 flex justify-center items-center">
-      <button
-        className="mr-2 px-2 py-1 border border-gray-300 rounded"
-        onClick={() => handlePageChange(page - 1)}
-        disabled={page === 1}
-      >
-        Previous
-      </button>
-      <span className="mx-2">
+    <section className='container mx-auto flex justify-center items-center my-8'>
+      {page > 1 ? (
+        <Link
+          className='mr-2 px-2 py-1 border border-gray-300 rounded'
+          href={`/properties?page=${page - 1}`}
+        >
+          Previous
+        </Link>
+      ) : null}
+      <span className='mx-2'>
         Page {page} of {totalPages}
       </span>
-      <button
-        className="ml-2 px-2 py-1 border border-gray-300 rounded"
-        onClick={() => handlePageChange(page + 1)}
-        disabled={page === totalPages}
-      >
-        Next
-      </button>
-    </div>
+      {page < totalPages ? (
+        <Link
+          className='ml-2 px-2 py-1 border border-gray-300 rounded'
+          href={`/properties?page=${page + 1}`}
+        >
+          Next
+        </Link>
+      ) : null}
+    </section>
   );
 };
-
 export default Pagination;

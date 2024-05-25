@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "@/components/AuthProvider";
 import "@/assets/styles/globals.css";
 import { GlobalProvider } from "@/context/GlobalContext";
-import 'photoswipe/dist/photoswipe.css';
+import "photoswipe/dist/photoswipe.css";
 
 export const metadata = {
   title: "Property Pulse | Find The Perfect Rental",
@@ -16,8 +16,8 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <GlobalProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <GlobalProvider>
         <html>
           <body>
             <Navbar />
@@ -26,8 +26,8 @@ const MainLayout = ({ children }) => {
             <Footer />
           </body>
         </html>
-      </AuthProvider>
-    </GlobalProvider>
+      </GlobalProvider>
+    </AuthProvider>
   );
 };
 
