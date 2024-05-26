@@ -19,11 +19,11 @@ const MessageSchema = new Schema(
     },
     name: {
       type: String,
-      required: [true, 'Name is required!'],
+      required: [true, 'Name is required'],
     },
     email: {
       type: String,
-      required: [true, 'Email is required!'],
+      required: [true, 'Email is required'],
     },
     phone: {
       type: String,
