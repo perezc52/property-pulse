@@ -1,6 +1,11 @@
 'use client';
 import { useGlobalContext } from '@/context/GlobalContext';
 
+// NOTE: here the logic for getting the unread message count has been moved to
+// GlobalContext since that component is also responsible for managing that
+// state, additionally we can use a server action to get the unread message
+// count.
+
 const UnreadMessageCount = () => {
   const { unreadCount } = useGlobalContext();
 

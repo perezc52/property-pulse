@@ -1,8 +1,7 @@
-import React from "react";
-import Hero from "@/components/Hero";
-import InfoBoxes from "@/components/InfoBoxes";
-import HomeProperties from "@/components/HomeProperties";
-import FeaturedProperties from "@/components/FeaturedProperties";
+import Hero from '@/components/Hero';
+import InfoBoxes from '@/components/InfoBoxes';
+import HomeProperties from '@/components/HomeProperties';
+import FeaturedProperties from '@/components/FeaturedProperties';
 
 const HomePage = () => {
   return (
@@ -14,5 +13,4 @@ const HomePage = () => {
     </>
   );
 };
-
 export default HomePage;

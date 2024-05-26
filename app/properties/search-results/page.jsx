@@ -1,10 +1,17 @@
-import Link from "next/link";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
-import PropertyCard from "@/components/PropertyCard";
-import PropertySearchForm from "@/components/PropertySearchForm";
-import connectDB from "@/config/database";
-import Property from "@/models/Property";
-import { convertToSerializeableObject } from "@/utils/convertToObject";
+import Link from 'next/link';
+import { FaArrowAltCircleLeft } from 'react-icons/fa';
+import PropertyCard from '@/components/PropertyCard';
+import PropertySearchForm from '@/components/PropertySearchForm';
+import connectDB from '@/config/database';
+import Property from '@/models/Property';
+import { convertToSerializeableObject } from '@/utils/convertToObject';
+
+// NOTE: This component has been changed to a server component where we can
+// query the database directly.
+// This will also be a dynamically rendered component as searchParams are not
+// known at build time.
+// Moving this component to a server component means we can remove our app/api/properties/search/route.js
+// route handler as it's no longer used.
 
 const SearchResultsPage = async ({
   searchParams: { location, propertyType },

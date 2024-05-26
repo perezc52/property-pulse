@@ -3,6 +3,8 @@ import connectDB from '@/config/database';
 import Property from '@/models/Property';
 
 const FeaturedProperties = async () => {
+  // NOTE: here we can use a server component and simply query the database
+  // directly.
 
   await connectDB();
 
@@ -10,6 +12,8 @@ const FeaturedProperties = async () => {
     is_featured: true,
   }).lean();
 
+  // NOTE: don't use logical && for conditional rendering especially on the
+  // length of an array - https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx
 
   return properties.length > 0 ? (
     <section className='bg-blue-50 px-4 pt-6 pb-10'>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -10,8 +10,12 @@ import {
   EmailIcon,
 } from 'react-share';
 
-const ShareButtons = ({ property }) => {
-  const shareUrl = `http://${process.env.NEXT_PUBLIC_DOMAIN}/properties/${property._id}`;
+const ShareButtons = ({ property, PUBLIC_DOMAIN }) => {
+  // NOTE: here we receive a prop from our parent page component which is
+  // server rendered and knows if we are in deployed to Vercel or developing
+  // locally.
+
+  const shareUrl = `${PUBLIC_DOMAIN}/properties/${property._id}`;
 
   return (
     <>
@@ -22,17 +26,19 @@ const ShareButtons = ({ property }) => {
         <FacebookShareButton
           url={shareUrl}
           quote={property.name}
-          hashtag={`#${property.type}ForRent`}
+          hashtag={`#${property.type.replace(/\s/g, '')}ForRent`}
         >
           <FacebookIcon size={40} round={true} />
         </FacebookShareButton>
+
         <TwitterShareButton
           url={shareUrl}
           title={property.name}
-          hashtags={[`${property.type}ForRent`]}
+          hashtags={[`${property.type.replace(/\s/g, '')}ForRent`]}
         >
           <TwitterIcon size={40} round={true} />
         </TwitterShareButton>
+
         <WhatsappShareButton
           url={shareUrl}
           title={property.name}
@@ -40,10 +46,11 @@ const ShareButtons = ({ property }) => {
         >
           <WhatsappIcon size={40} round={true} />
         </WhatsappShareButton>
+
         <EmailShareButton
           url={shareUrl}
           subject={property.name}
-          body={`Check out this property: ${shareUrl}`}
+          body={`Check out this property listing: ${shareUrl}`}
         >
           <EmailIcon size={40} round={true} />
         </EmailShareButton>
